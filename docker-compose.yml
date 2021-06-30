@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+
+  prd-omada-controller-app:
+    image: mbentley/omada-controller:3.2
+    container_name: prd-omada-controller-app
+    restart: unless-stopped
+    env_file: prd-omada-controller-app.env
+    network_mode: host
+    volumes:
+      - prd-omada-controller-app-data:/opt/tplink/EAPController/data
+      - prd-omada-controller-app-work:/opt/tplink/EAPController/work
+      - ./logs:/opt/tplink/EAPController/logs
+
+# VOLUMES
+volumes:
+
+  prd-omada-controller-app-data:
+    name: prd-omada-controller-app-data
+  prd-omada-controller-app-work:
+    name: prd-omada-controller-app-work
