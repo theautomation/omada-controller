@@ -1,8 +1,9 @@
+---
 version: '3.8'
 services:
 
   prd-omada-controller-app:
-    image: mbentley/omada-controller:3.2
+    image: docker-registry.theautomation.nl/coen/prd-omada-controller-app:latest
     container_name: prd-omada-controller-app
     restart: unless-stopped
     env_file: prd-omada-controller-app.env
