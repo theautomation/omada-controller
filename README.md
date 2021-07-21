@@ -5,4 +5,4 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/theautomation/omada-controller?logo=github)
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/theautomation/omada-controller/main?logo=github)
 
-[omada-controller](https://www.tp-link.com/nl/omada-sdn/): Omada's Software Defined Networking (SDN) platform integrates network devices, including access points runngin in Docker.
+[omada-controller](https://www.tp-link.com/nl/omada-sdn/): Omada's Software Defined Networking (SDN) platform integrates network devices, including access points running in a Docker container.
