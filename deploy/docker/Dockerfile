@@ -1,0 +1,1 @@
+FROM mbentley/omada-controller:3.2
