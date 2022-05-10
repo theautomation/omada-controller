@@ -44,7 +44,7 @@ spec:
       enableServiceLinks: true
       containers:
         - name: omada-controller
-          image: mbentley/omada-controller:4.2
+          image: mbentley/omada-controller:3.2-amd64
           imagePullPolicy: IfNotPresent
           env:
             - name: "TZ"
