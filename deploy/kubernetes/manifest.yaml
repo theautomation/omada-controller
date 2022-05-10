@@ -44,7 +44,7 @@ spec:
       enableServiceLinks: true
       containers:
         - name: omada-controller
-          image: mbentley/omada-controller:3.2
+          image: mbentley/omada-controller:4.2
           imagePullPolicy: IfNotPresent
           env:
             - name: "TZ"
@@ -108,8 +108,6 @@ metadata:
   namespace: networking
   labels:
     app: omada-controller
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   ingressClassName: nginx-private
   rules:
