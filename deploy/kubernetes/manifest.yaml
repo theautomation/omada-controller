@@ -80,7 +80,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: omada-controller-data
+            claimName: pvc-iscsi-omada-controller-data
 
 ---
 kind: Service
