@@ -1,0 +1,125 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-iscsi-omada-controller-data
+  namespace: networking
+  labels:
+    app: omada-controller
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "freenas-iscsi-csi"
+spec:
+  storageClassName: freenas-iscsi-csi
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  # volumeName: pvc-
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: omada-controller
+  namespace: networking
+  labels:
+    app: omada-controller
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: omada-controller
+  template:
+    metadata:
+      labels:
+        app: omada-controller
+    spec:
+      serviceAccountName: default
+      automountServiceAccountToken: true
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: true
+      containers:
+        - name: omada-controller
+          image: mbentley/omada-controller:3.2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: "TZ"
+              value: "Europe/Amsterdam"
+          ports:
+            - name: http
+              containerPort: 8043
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 8043
+            initialDelaySeconds: 0
+            failureThreshold: 3
+            timeoutSeconds: 1
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8043
+            initialDelaySeconds: 0
+            failureThreshold: 3
+            timeoutSeconds: 1
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 8043
+            initialDelaySeconds: 0
+            failureThreshold: 30
+            timeoutSeconds: 1
+            periodSeconds: 5
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: omada-controller-data
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: omada-controller
+  namespace: networking
+  labels:
+    app: omada-controller
+spec:
+  selector:
+    app: omada-controller
+  type: ClusterIP
+  ports:
+    - port: 8043
+      protocol: TCP
+      targetPort: http
+      name: http
+
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: omada-controller
+  namespace: networking
+  labels:
+    app: omada-controller
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+spec:
+  ingressClassName: nginx-private
+  rules:
+    - host: omada-controller.k8s.lan
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: omada-controller
+                port:
+                  number: 8043
