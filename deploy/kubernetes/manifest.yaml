@@ -55,7 +55,7 @@ spec:
               value: "Europe/Amsterdam"
           ports:
             - name: http
-              containerPort: 8043
+              containerPort: 8088
               protocol: TCP
           # livenessProbe:
           #   tcpSocket:
@@ -99,7 +99,7 @@ spec:
     app: omada-controller
   type: ClusterIP
   ports:
-    - port: 8043
+    - port: 8088
       protocol: TCP
       targetPort: http
       name: http
@@ -127,4 +127,4 @@ spec:
               service:
                 name: omada-controller
                 port:
-                  number: 8043
+                  number: 8088
