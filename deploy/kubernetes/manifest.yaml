@@ -113,6 +113,7 @@ metadata:
   labels:
     app: omada-controller
   annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header X-Forwarded-Port 8043;
 spec:
