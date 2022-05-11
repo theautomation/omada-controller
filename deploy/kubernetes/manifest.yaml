@@ -47,6 +47,10 @@ spec:
           image: mbentley/omada-controller:3.2-amd64
           imagePullPolicy: IfNotPresent
           env:
+            - name: "MANAGE_HTTPS_PORT"
+              value: "8043"
+            - name: "MANAGE_HTTP_PORT"
+              value: "8088"
             - name: "TZ"
               value: "Europe/Amsterdam"
           ports:
