@@ -115,7 +115,7 @@ metadata:
 spec:
   ingressClassName: nginx-private
   rules:
-    - host: omada-controller.k8s.lan
+    - host: "omada-controller.k8s.lan"
       http:
         paths:
           - path: "/"
