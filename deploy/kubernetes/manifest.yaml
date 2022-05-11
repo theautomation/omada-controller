@@ -113,9 +113,8 @@ metadata:
   labels:
     app: omada-controller
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header Host $http_host:8043;
+      proxy_set_header X-Forwarded-Port 8043;
 spec:
   ingressClassName: nginx-private
   rules:
