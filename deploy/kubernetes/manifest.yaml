@@ -57,27 +57,27 @@ spec:
             - name: http
               containerPort: 8088
               protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: 8088
-            initialDelaySeconds: 0
-            failureThreshold: 3
-            timeoutSeconds: 1
-            periodSeconds: 10
-          readinessProbe:
-            tcpSocket:
-              port: 8088
-            initialDelaySeconds: 0
-            failureThreshold: 3
-            timeoutSeconds: 1
-            periodSeconds: 10
-          startupProbe:
-            tcpSocket:
-              port: 8088
-            initialDelaySeconds: 0
-            failureThreshold: 30
-            timeoutSeconds: 1
-            periodSeconds: 5
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 8088
+          #   initialDelaySeconds: 0
+          #   failureThreshold: 3
+          #   timeoutSeconds: 1
+          #   periodSeconds: 10
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: 8088
+          #   initialDelaySeconds: 0
+          #   failureThreshold: 3
+          #   timeoutSeconds: 1
+          #   periodSeconds: 10
+          # startupProbe:
+          #   tcpSocket:
+          #     port: 8088
+          #   initialDelaySeconds: 0
+          #   failureThreshold: 30
+          #   timeoutSeconds: 1
+          #   periodSeconds: 5
           volumeMounts:
             - name: data
               mountPath: /data
