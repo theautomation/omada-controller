@@ -55,7 +55,7 @@ spec:
               value: "Europe/Amsterdam"
           ports:
             - name: http
-              containerPort: 8088
+              containerPort: 8043
               protocol: TCP
           # livenessProbe:
           #   tcpSocket:
@@ -113,8 +113,8 @@ metadata:
   labels:
     app: omada-controller
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   ingressClassName: nginx-private
   rules:
@@ -127,4 +127,4 @@ spec:
               service:
                 name: omada-controller
                 port:
-                  number: 8088
+                  number: 8043
