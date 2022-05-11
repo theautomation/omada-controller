@@ -99,7 +99,7 @@ spec:
     app: omada-controller
   type: ClusterIP
   ports:
-    - port: 8088
+    - port: 8043
       protocol: TCP
       targetPort: http
       name: http
