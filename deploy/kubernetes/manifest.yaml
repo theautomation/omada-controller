@@ -1,21 +1,21 @@
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: pvc-iscsi-omada-controller-data
-  namespace: networking
-  labels:
-    app: omada-controller
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "freenas-iscsi-csi"
-spec:
-  storageClassName: freenas-iscsi-csi
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  # volumeName: pvc-
+# ---
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: pvc-iscsi-omada-controller-data
+#   namespace: networking
+#   labels:
+#     app: omada-controller
+#   annotations:
+#     volume.beta.kubernetes.io/storage-class: "freenas-iscsi-csi"
+# spec:
+#   storageClassName: freenas-iscsi-csi
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi
+#   # volumeName: pvc-
 
 ---
 kind: Deployment
@@ -47,7 +47,7 @@ spec:
           image: mbentley/omada-controller:3.2-amd64
           imagePullPolicy: IfNotPresent
           env:
-            - name: "MANAGE_HTTPS_PORT"
+            - name: MANAGE_HTTPS_PORT
               value: "8043"
             - name: "MANAGE_HTTP_PORT"
               value: "8088"
@@ -57,34 +57,34 @@ spec:
             - name: http
               containerPort: 8043
               protocol: TCP
-          # livenessProbe:
-          #   tcpSocket:
-          #     port: 8043
-          #   initialDelaySeconds: 0
-          #   failureThreshold: 3
-          #   timeoutSeconds: 1
-          #   periodSeconds: 10
-          # readinessProbe:
-          #   tcpSocket:
-          #     port: 8043
-          #   initialDelaySeconds: 0
-          #   failureThreshold: 3
-          #   timeoutSeconds: 1
-          #   periodSeconds: 10
-          # startupProbe:
-          #   tcpSocket:
-          #     port: 8043
-          #   initialDelaySeconds: 0
-          #   failureThreshold: 30
-          #   timeoutSeconds: 1
-          #   periodSeconds: 5
-          volumeMounts:
-            - name: data
-              mountPath: /data
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: pvc-iscsi-omada-controller-data
+          livenessProbe:
+            tcpSocket:
+              port: 8043
+            initialDelaySeconds: 0
+            failureThreshold: 3
+            timeoutSeconds: 1
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8043
+            initialDelaySeconds: 0
+            failureThreshold: 3
+            timeoutSeconds: 1
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 8043
+            initialDelaySeconds: 0
+            failureThreshold: 30
+            timeoutSeconds: 1
+            periodSeconds: 5
+      #     volumeMounts:
+      #       - name: data
+      #         mountPath: /data
+      # volumes:
+      #   - name: data
+      #     persistentVolumeClaim:
+      #       claimName: pvc-iscsi-omada-controller-data
 
 ---
 kind: Service
@@ -113,8 +113,7 @@ metadata:
   labels:
     app: omada-controller
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   ingressClassName: nginx-private
   rules:
