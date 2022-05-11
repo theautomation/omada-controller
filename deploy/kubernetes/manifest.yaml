@@ -55,25 +55,25 @@ spec:
               value: "Europe/Amsterdam"
           ports:
             - name: http
-              containerPort: 8043
+              containerPort: 8088
               protocol: TCP
           livenessProbe:
             tcpSocket:
-              port: 8043
+              port: 8088
             initialDelaySeconds: 0
             failureThreshold: 3
             timeoutSeconds: 1
             periodSeconds: 10
           readinessProbe:
             tcpSocket:
-              port: 8043
+              port: 8088
             initialDelaySeconds: 0
             failureThreshold: 3
             timeoutSeconds: 1
             periodSeconds: 10
           startupProbe:
             tcpSocket:
-              port: 8043
+              port: 8088
             initialDelaySeconds: 0
             failureThreshold: 30
             timeoutSeconds: 1
@@ -99,7 +99,7 @@ spec:
     app: omada-controller
   type: ClusterIP
   ports:
-    - port: 8043
+    - port: 8088
       protocol: TCP
       targetPort: http
       name: http
@@ -124,4 +124,4 @@ spec:
               service:
                 name: omada-controller
                 port:
-                  number: 8043
+                  number: 8088
